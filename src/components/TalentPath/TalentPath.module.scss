@@ -1,0 +1,52 @@
+@import "~@styles/colors";
+
+:local {
+  .TalentPath {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .title {
+    color: $white;
+    font-weight: normal;
+    font-size: 1rem;
+    white-space: nowrap;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 1rem;
+  }
+
+  .talents {
+    display: flex;
+    width: 100%;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    overflow-x: auto;
+  }
+
+  @media screen and (max-width: 920px) {
+    .TalentPath {
+      width: 100%;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .title {
+      padding-bottom: 1rem;
+      padding-left: 0;
+    }
+
+    .talents {
+      justify-content: center;
+    }
+  }
+
+  @media screen and (max-width: 380px) {
+    .talents {
+      justify-content: flex-start;
+    }
+  }
+}

@@ -1,0 +1,99 @@
+$icon-size: 50px;
+$gap-width: 10vw;
+
+$connection-enabled: #303234;
+$connection-disabled: #1a1c1d;
+
+@function talent-gradient($primary, $secondary) {
+  @return linear-gradient(
+    to bottom,
+    $primary,
+    $primary 50%,
+    $secondary 50%,
+    $primary
+  );
+}
+
+:local {
+  .Talent {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    padding: 0.25rem;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    background: talent-gradient(#4c4c4c, #3e3e3e);
+    margin-right: 1rem;
+
+    // Create a new composite context to allow the pseudo-elements
+    // to position correctly. Without this, the browser renders
+    // a slightly different result with a different z-index order.
+    opacity: 0.99;
+
+    &.active {
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+      background: talent-gradient(#6ea7e2, #263b50);
+    }
+
+    &:not(:last-of-type) {
+      margin-right: $gap-width;
+
+      &::after,
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        cursor: default;
+        pointer-events: none;
+        width: $gap-width;
+        height: 1rem;
+        border-top: 1px solid lighten($connection-disabled, 5%);
+        border-bottom: 1px solid lighten($connection-disabled, 5%);
+        top: 50%;
+        left: 100%;
+      }
+
+      &::after {
+        z-index: 0;
+        background: $connection-disabled;
+        transform: translateY(-50%);
+      }
+
+      &::before {
+        z-index: 1;
+        background: $connection-enabled;
+        border-top: 1px solid lighten($connection-enabled, 5%);
+        border-bottom: 1px solid lighten($connection-enabled, 5%);
+        transform: translateY(-50%) scaleX(0);
+        transition: transform 0.5s ease;
+        transform-origin: left center;
+      }
+
+      &.active::before {
+        transform: translateY(-50%) scaleX(1);
+      }
+    }
+  }
+
+  .icon {
+    width: $icon-size;
+    height: $icon-size;
+    background-image: url("~@assets/talent-icons-sprite.png");
+  }
+
+  .label {
+    display: none;
+    visibility: hidden;
+  }
+
+  @media screen and (max-width: 920px) {
+    .Talent:first-of-type {
+      margin-left: 1rem;
+    }
+
+    .Talent:last-of-type {
+      margin-right: 1rem;
+    }
+  }
+}
